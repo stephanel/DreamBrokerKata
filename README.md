@@ -1,4 +1,4 @@
-## Getting Started
+## How to
 
 Install packages using npm:
 ```bash
@@ -19,7 +19,7 @@ npm start
 
 Then, load http://localhost:3000 in your browser or use your favorite HTTP client.
 
-Demo on Heroku:
+## Demo on Heroku:
 ```bash
 curl --header "Content-Type: application/json" \
 --request POST \
