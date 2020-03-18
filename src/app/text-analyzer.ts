@@ -3,7 +3,7 @@ import { TextAnalyzerResult, TextLength } from "./text-analyzer-result";
 export class TextAnalyzer {
 
     analyzeText(text: string): TextAnalyzerResult {
-        const words = text.match(/[^ ]+/g) || [ ];
+        const words = this.getArrayOfWords(text);
         const textWithoutSpaces = text.replace(/ /g, '');
 
         const characterCount = this.transformArrayOfLettersToObjectContainingLettersCount(textWithoutSpaces);
@@ -18,6 +18,14 @@ export class TextAnalyzer {
             wordCount: words.length,
             characterCount: characterCount
         } as TextAnalyzerResult;
+    }
+
+    private getTextWithoutWhiteSpaces(text: string): string{
+        return text.replace(/ /g, '');
+    }
+
+    private getArrayOfWords(text: string): string[] {
+        return text.match(/[^ ]+/g) || [ ];
     }
 
     private transformArrayOfLettersToObjectContainingLettersCount(textWithoutSpaces: string): { [key: string]: number } {
