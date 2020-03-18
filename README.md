@@ -5,6 +5,13 @@ Install packages using npm:
 npm install
 ```
 
+Run tests:
+```bash
+npm test
+or
+npm run test:watch
+```
+
 Start server using npm:
 ```bash
 npm start
