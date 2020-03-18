@@ -2,6 +2,10 @@ import express = require('express');
 import bodyParser = require('body-parser');
 import { TextAnalyzer } from './text-analyzer';
 
+const config = {
+    port: process.env.PORT || 3000
+};
+
 const app: express.Application = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +25,6 @@ app.post('/analyze', (req, res) => {
     res.json(result);
 });
 
-app.listen(3000, () => {
+app.listen(config.port, () => {
     console.log('Server listening');
 })
