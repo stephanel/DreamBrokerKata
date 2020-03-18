@@ -6,26 +6,20 @@ describe('TextAnalyzer', () => {
 
         const sut = new TextAnalyzer();
 
-        it('Should analyze input text', () => {
-            // Arrange
-            const text = 'hello 2 times  ';
-    
-            // Act
-            const actual = sut.analyzeText(text);
-    
-            // Assert
-            expect(actual.textLength.withSpaces).toBe(15);
-            expect(actual.textLength.withoutSpaces).toBe(11);
-            expect(actual.wordCount).toBe(3);
-            expect(actual.characterCount.e).toBe(2);
-            expect(actual.characterCount.h).toBe(1);
-            expect(actual.characterCount.i).toBe(1);
-            expect(actual.characterCount.l).toBe(2);
-            expect(actual.characterCount.m).toBe(1);
-            expect(actual.characterCount.o).toBe(1);
-            expect(actual.characterCount.s).toBe(1);
-            expect(actual.characterCount.t).toBe(1);
-        })
+        it.each`
+            inputText           | expected
+            ${'hello 2 times  '}| ${{"textLength":{"withSpaces":15,"withoutSpaces":11},"wordCount":3,"characterCount":[{"e":2},{"h":1},{"i":1},{"l":2},{"m":1},{"o":1},{"s":1},{"t":1}]}}
+            ${'aa bb cc kk ii gg kl 11 23 times  '}| ${{"textLength":{"withSpaces":34,"withoutSpaces":23},"wordCount":10,"characterCount":[{"a":2},{"b":2},{"c":2},{"e":1},{"g":2},{"i":3},{"k":3},{"l":1},{"m":1},{"s":1},{"t":1}]}}
+        `('Should analyze input text', ({inputText, expected}) => {
+                // Arrange
+                const text = inputText;
+                    
+                // Act
+                const actual = sut.analyzeText(text);
+
+                // Assert
+                expect(JSON.stringify(actual)).toBe(JSON.stringify(expected));
+        });
     
     })
 
