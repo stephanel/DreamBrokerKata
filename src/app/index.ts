@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
     res.send('Welcome!');
 });
 
+app.get('/version', (req, res) => {
+    const json = require('../package.json');
+    res.send(json.version);
+});
+
 app.post('/analyze', (req, res) => {
     const analyzer = new TextAnalyzer();
 
