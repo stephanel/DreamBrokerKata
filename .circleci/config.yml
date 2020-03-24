@@ -7,19 +7,16 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
       - run: npm install
   test:
     executor:
       name: node/default
     steps:
-      - node/with-cache:
       - run: npm test
   deploy:
     executor:
       name: node/default
     steps:
-      - node/with-cache:
       - run:
         name: Deploy Master to Heroku
         command: |
