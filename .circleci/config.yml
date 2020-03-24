@@ -8,15 +8,14 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: npm test
       - run:
-        name: Run tests with JUnit as reporter
-        command: npm test -- --ci --runInBand --reporters=default --reporters=jest-junit
-        environment:
-          JEST_JUNIT_OUTPUT_DIR: "reports/junit/js-test-results.xml"
+          name: Run tests with JUnit as reporter
+          command: npm test -- --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+              JEST_JUNIT_OUTPUT_DIR: "reports/junit/js-test-results.xml"
       - store_test_results:
-        path: reports/junit
+          path: reports/junit
       - store_artifacts:
-        path: reports/junit
+          path: reports/junit
       - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git circleci-project-setup
           
