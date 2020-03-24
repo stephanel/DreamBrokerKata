@@ -2,21 +2,25 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
 jobs:
-  build-test-and-deploy:
+  build:
     executor:
       name: node/default
     steps:
       - checkout
       - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
-            - run:
-              name: Deploy Master to Heroku
-              command: |
-                git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-
-workflows:
-  build-test-and-deploy:
-    jobs:
-      - build-test-and-deploy
+      - run: npm install
+  test:
+    executor:
+      name: node/default
+    steps:
+      - node/with-cache:
+      - run: npm test
+  deploy:
+    executor:
+      name: node/default
+    steps:
+      - node/with-cache:
+      - run:
+        name: Deploy Master to Heroku
+        command: |
+          git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
