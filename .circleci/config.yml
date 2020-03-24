@@ -9,17 +9,14 @@ jobs:
       - checkout
       - run: npm install
       - run: npm test
-      - run: # run coverage report
-          name: code-coverage
-          command: './node_modules/.bin/nyc report --reporter=text-lcov'
-      - store_artifacts: # special step to save test results as as artifact
-          # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/ 
-          path: test-results.xml
-          prefix: tests
-      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/ 
-          path: coverage
-          prefix: coverage
-      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: test-results.xml
+      - run:
+        name: Run tests with JUnit as reporter
+        command: npm test -- --ci --runInBand --reporters=default --reporters=jest-junit
+        environment:
+          JEST_JUNIT_OUTPUT_DIR: "reports/junit/js-test-results.xml"
+      - store_test_results:
+        path: reports/junit
+      - store_artifacts:
+        path: reports/junit
       - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git circleci-project-setup
           
